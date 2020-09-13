@@ -1,33 +1,19 @@
 import React from "react";
-import { createStore } from "redux";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import MovieDetail from "./MovieDetail";
+import MoviesList from "./MoviesList";
 
 const App = () => {
-  return <div>hello</div>;
+  return (
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route exact path="/" component={MoviesList} />
+          <Route path='/:id' component={MovieDetail} />
+        </Switch>
+      </div>
+    </Router>
+  );
 };
 
 export default App;
-
-const defaulState = {
-  welcome: "Hi",
-  otherState: "some stuff",
-};
-
-const greeting = (state = defaulState, action) => {
-  switch (action.type) {
-    case "GREET_ME":
-      return { ...state, welcome: "Hello Johnny" };
-    case "GREET_WORLD":
-      return { welcome: "Hello World!" };
-    default:
-      return state;
-  }
-};
-
-const store = createStore(greeting);
-console.log("store", store.getState());
-
-store.dispatch({
-  type: "GREET_ME",
-});
-
-console.log("store", store.getState());

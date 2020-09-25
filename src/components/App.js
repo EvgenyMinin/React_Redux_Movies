@@ -1,18 +1,27 @@
 import React from "react";
+import { Provider } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { createStore } from "redux";
+
+import rootReducer from "../rootReducer";
+
 import MovieDetail from "./MovieDetail";
 import MoviesList from "./MoviesList";
 
+const store = createStore(rootReducer);
+
 const App = () => {
   return (
-    <Router>
-      <div className="App">
-        <Switch>
-          <Route exact path="/" component={MoviesList} />
-          <Route path='/:id' component={MovieDetail} />
-        </Switch>
-      </div>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" component={MoviesList} />
+            <Route path="/:id" component={MovieDetail} />
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
   );
 };
 

@@ -23,5 +23,5 @@ const PosterWrapper = styled.div`
 
 export const Poster = styled.img`
   width: 100%;
-  box-shadow: 0 0 35px white;
+  box-shadow: 0 0 35px black;
 `;

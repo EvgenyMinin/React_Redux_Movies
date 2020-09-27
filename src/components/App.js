@@ -8,6 +8,7 @@ import rootReducer from "../rootReducer";
 
 import MovieDetail from "./MovieDetail";
 import MoviesList from "./MoviesList";
+import Toggle from './Toggle';
 
 const store = createStore(rootReducer, {}, composeWithDevTools());
 
@@ -15,6 +16,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
+        <Toggle />
         <div className="App">
           <Switch>
             <Route exact path="/" component={MoviesList} />

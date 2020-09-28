@@ -10,6 +10,8 @@ import MovieDetail from "./MovieDetail";
 import MoviesList from "./MoviesList";
 import Toggle from './Toggle';
 
+import './App.css';
+
 const store = createStore(rootReducer, {}, composeWithDevTools());
 
 const App = () => {

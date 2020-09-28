@@ -21,8 +21,6 @@ const MoviesList = () => {
     }
   }, []);
 
-  console.log("movies", movies);
-
   return (
     <MoviesGrid>
       {movies.map((movie) => (
@@ -41,10 +39,10 @@ const MoviesGrid = styled.div`
   max-width: 1360px;
   margin: 0 auto;
   a {
-    max-width: 300px;
+    display: flex;
+    max-width: 250px;
     width: 100%;
-    &:not(:last-child) {
-      margin-right: 24px;
-    }
+    text-decoration: none;
+    margin: 1rem;
   }
 `;

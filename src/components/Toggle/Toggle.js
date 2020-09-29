@@ -4,13 +4,13 @@ import {bindActionCreators} from 'redux';
 
 import { toggleMessage } from "../../actions";
 
-const Toggle = ({ messageVisibility, dispatch }) => {
+const Toggle = ({ messageVisibility, toggleMessage }) => {
   return (
     <div>
       {messageVisibility && (
         <p>You will be seeing this if redux action is toggled</p>
       )}
-      <button onClick={() => dispatch(toggleMessage())}>Toggle Me</button>
+      <button onClick={toggleMessage}>Toggle Me</button>
     </div>
   );
 };

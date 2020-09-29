@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
 
 import rootReducer from "../rootReducer";
 
@@ -13,7 +14,7 @@ import Toggle from "./Toggle";
 
 import "./App.css";
 
-const middleware = [logger];
+const middleware = [logger, thunk];
 
 const store = createStore(
   rootReducer,

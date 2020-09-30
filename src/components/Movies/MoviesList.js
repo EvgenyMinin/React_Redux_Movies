@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-
-import { ROOT_PATH } from "../../api/api";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { getMovies } from "./actions";
 
 import Movie from "./Movie";
 
-const MoviesList = () => {
-  const [movies, setMovies] = useState([]);
-
+const MoviesList = ({ movies, getMovies }) => {
   useEffect(() => {
-    try {
-      const fetchData = async () => {
-        const res = await fetch(ROOT_PATH);
-        const data = await res.json();
-        setMovies(data.results);
-      };
-      fetchData();
-    } catch (e) {
-      console.log(e);
-    }
+    getMovies();
   }, []);
 
   return (
@@ -30,7 +20,19 @@ const MoviesList = () => {
   );
 };
 
-export default MoviesList;
+const mapStateToProps = (state) => ({
+  movies: state.movies.movies,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      getMovies,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoviesList);
 
 const MoviesGrid = styled.div`
   display: flex;

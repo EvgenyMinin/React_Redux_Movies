@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { Poster } from "../MoviesList/Movie";
+import { Poster } from "./Movie";
 
 import { BACKDROP_PATH, POSTER_PATH } from "../../api/api";
 

@@ -8,8 +8,8 @@ import thunk from 'redux-thunk';
 
 import rootReducer from "../rootReducer";
 
-import MovieDetail from "./MovieDetail";
-import MoviesList from "./MoviesList";
+import MovieDetail from "./Movies/MovieDetail";
+import MoviesList from "./Movies/MoviesList";
 import Toggle from "./Toggle";
 
 import "./App.css";

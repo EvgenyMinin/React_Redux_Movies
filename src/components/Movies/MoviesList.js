@@ -6,10 +6,14 @@ import { getMovies } from "./actions";
 
 import Movie from "./Movie";
 
-const MoviesList = ({ movies, getMovies }) => {
+const MoviesList = ({ movies, getMovies, isLoaded }) => {
   useEffect(() => {
-    getMovies();
-  }, []);
+    if (!isLoaded) {
+      getMovies();
+    }
+  }, [isLoaded]);
+
+  if (!isLoaded) return <h1>Loading...</h1>
 
   return (
     <MoviesGrid>
@@ -22,6 +26,7 @@ const MoviesList = ({ movies, getMovies }) => {
 
 const mapStateToProps = (state) => ({
   movies: state.movies.movies,
+  isLoaded: state.movies.isMovieListLoaded,
 });
 
 const mapDispatchToProps = (dispatch) =>

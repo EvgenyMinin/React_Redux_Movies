@@ -1,29 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+
+import { getMovie, resetMovie } from "./actions";
 
 import { Poster } from "./Movie";
 
 import { BACKDROP_PATH, POSTER_PATH } from "../../api/api";
+import { useEffect } from "react";
 
-const MovieDetail = () => {
-  const [movie, setMovie] = useState({});
+const MovieDetail = ({ movie, getMovie, isLoadedMovie, resetMovie }) => {
   const { id } = useParams();
 
   useEffect(() => {
-    try {
-      const fetchMovie = async () => {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=65e043c24785898be00b4abc12fcdaae&language=en-US`
-        );
-        const data = await res.json();
-        setMovie(data);
-      };
-      fetchMovie();
-    } catch (e) {
-      console.log(e);
+    if (!isLoadedMovie) {
+      getMovie(id);
     }
-  }, [id]);
+
+    return () => {
+      resetMovie();
+    };
+  }, []);
 
   if (!movie.id) return null;
 
@@ -45,14 +44,27 @@ const MovieDetail = () => {
   );
 };
 
-export default MovieDetail;
+const mapStateToProps = (state) => ({
+  movie: state.movies.movie,
+  isLoadedMovie: state.movies.isMovieItemLoaded,
+});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      getMovie,
+      resetMovie,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieDetail);
 
 const MovieWrapper = styled.div`
   position: relative;
   padding-top: 50vh;
   background: url(${(props) => props.backdrop}) no-repeat;
   background-size: cover;
-  
 `;
 
 const MoreInfo = styled.div`

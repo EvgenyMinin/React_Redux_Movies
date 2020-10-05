@@ -11,7 +11,7 @@ import rootReducer from "../rootReducer";
 
 import MovieDetail from "./Movies/MovieDetail";
 import MoviesList from "./Movies/MoviesList";
-import Toggle from "./Toggle";
+import Header from "./Header";
 
 import "./App.css";
 
@@ -27,7 +27,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Toggle />
+        <Header />
         <div className="App">
           <Switch>
             <Route exact path="/" component={MoviesList} />

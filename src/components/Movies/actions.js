@@ -8,7 +8,6 @@ export function getMovies() {
   return async function (dispatch) {
     const res = await fetch(ROOT_PATH);
     const data = await res.json();
-    console.log("data", data);
     return dispatch({
       type: "GET_MOVIES",
       data: data.results,

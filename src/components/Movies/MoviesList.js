@@ -9,7 +9,7 @@ import Movie from "./Movie";
 const MoviesList = ({ movies, getMovies, isLoaded, moviesLoadedAt }) => {
   useEffect(() => {
     const oneHour = 60 * 60 * 1000;
-    if (!isLoaded || ((new Date()) - new Date(moviesLoadedAt)) > oneHour) {
+    if (!isLoaded || new Date() - new Date(moviesLoadedAt) > oneHour) {
       getMovies();
     }
   }, [isLoaded]);
@@ -26,7 +26,7 @@ const MoviesList = ({ movies, getMovies, isLoaded, moviesLoadedAt }) => {
 };
 
 const mapStateToProps = (state) => ({
-  movies: state.movies.movies,
+  movies: state.searchedMovies.searchedMovies.length > 0 ? state.searchedMovies.searchedMovies : state.movies.movies,
   isLoaded: state.movies.isMovieListLoaded,
   moviesLoadedAt: state.movies.moviesLoadedAt,
 });

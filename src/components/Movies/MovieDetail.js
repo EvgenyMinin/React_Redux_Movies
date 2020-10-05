@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { bindActionCreators } from "redux";
@@ -9,7 +9,6 @@ import { getMovie, resetMovie } from "./actions";
 import { Poster } from "./Movie";
 
 import { BACKDROP_PATH, POSTER_PATH } from "../../api/api";
-import { useEffect } from "react";
 
 const MovieDetail = ({ movie, getMovie, isLoadedMovie, resetMovie }) => {
   const { id } = useParams();

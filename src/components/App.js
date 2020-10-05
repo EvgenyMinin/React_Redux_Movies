@@ -3,8 +3,9 @@ import { Provider } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
-import logger from 'redux-logger';
-import thunk from 'redux-thunk';
+import { save, load } from "redux-localstorage-simple";
+import logger from "redux-logger";
+import thunk from "redux-thunk";
 
 import rootReducer from "../rootReducer";
 
@@ -18,8 +19,8 @@ const middleware = [logger, thunk];
 
 const store = createStore(
   rootReducer,
-  {},
-  composeWithDevTools(applyMiddleware(...middleware))
+  load(),
+  composeWithDevTools(applyMiddleware(...middleware, save()))
 );
 
 const App = () => {

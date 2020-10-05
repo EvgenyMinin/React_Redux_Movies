@@ -6,14 +6,15 @@ import { getMovies } from "./actions";
 
 import Movie from "./Movie";
 
-const MoviesList = ({ movies, getMovies, isLoaded }) => {
+const MoviesList = ({ movies, getMovies, isLoaded, moviesLoadedAt }) => {
   useEffect(() => {
-    if (!isLoaded) {
+    const oneHour = 60 * 60 * 1000;
+    if (!isLoaded || ((new Date()) - new Date(moviesLoadedAt)) > oneHour) {
       getMovies();
     }
   }, [isLoaded]);
 
-  if (!isLoaded) return <h1>Loading...</h1>
+  if (!isLoaded) return <h1>Loading...</h1>;
 
   return (
     <MoviesGrid>
@@ -27,6 +28,7 @@ const MoviesList = ({ movies, getMovies, isLoaded }) => {
 const mapStateToProps = (state) => ({
   movies: state.movies.movies,
   isLoaded: state.movies.isMovieListLoaded,
+  moviesLoadedAt: state.movies.moviesLoadedAt,
 });
 
 const mapDispatchToProps = (dispatch) =>

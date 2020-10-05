@@ -8,9 +8,9 @@ export function getMovies() {
   return async function (dispatch) {
     const res = await fetch(ROOT_PATH);
     const data = await res.json();
-    console.log('data', data);
+    console.log("data", data);
     return dispatch({
-      type: 'GET_MOVIES',
+      type: "GET_MOVIES",
       data: data.results,
     });
   };
@@ -22,9 +22,9 @@ export function getMovie(id) {
       `https://api.themoviedb.org/3/movie/${id}?api_key=65e043c24785898be00b4abc12fcdaae&language=en-US`
     );
     const movie = await res.json();
-    console.log('movie', movie);
+    console.log("movie", movie);
     return dispatch({
-      type: 'GET_MOVIE',
+      type: "GET_MOVIE",
       data: movie,
     });
   };
@@ -32,6 +32,6 @@ export function getMovie(id) {
 
 export function resetMovie() {
   return {
-    type: 'RESET_MOVIE',
-  }
+    type: "RESET_MOVIE",
+  };
 }

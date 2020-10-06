@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 
 import { getSearchMovies, clearSearch } from "./actions";
 
-const Search = ({ getSearchMovies, clearSearch }) => {
-  const [searchTerm, setSearchTerm] = useState("");
+const Search = () => {
+  const searchTerm = useSelector(state => state.searchedMovies.searchQuery);
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (searchTerm) {
-      getSearchMovies(searchTerm);
+      dispatch(getSearchMovies(searchTerm));
     } else {
-      clearSearch()
+      dispatch(clearSearch());
     }
   };
 
   const handleChange = (e) => {
-    setSearchTerm(e.target.value);
+    dispatch(getSearchMovies(e.target.value));
   };
 
   return (
@@ -35,20 +35,7 @@ const Search = ({ getSearchMovies, clearSearch }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  movies: state.searchedMovies.searchedMovies,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      getSearchMovies,
-      clearSearch
-    },
-    dispatch
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default Search;
 
 const SearchBoxWrapper = styled.section`
   width: 100%;

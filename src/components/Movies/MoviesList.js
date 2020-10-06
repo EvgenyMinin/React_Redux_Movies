@@ -1,20 +1,49 @@
 import React, { useEffect } from "react";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { getSearchMovies } from "../Header/actions";
 import { getMovies } from "./actions";
 
 import Movie from "./Movie";
 
-const MoviesList = ({ movies, getMovies, isLoaded, moviesLoadedAt }) => {
+const MoviesList = () => {
+  const dispatch = useDispatch();
+  const moviesState = useSelector(
+    (state) => ({
+      movies: state.movies.movies,
+      searchedMovies: state.searchedMovies.searchedMovies,
+      searchQuery: state.searchedMovies.searchQuery,
+      isLoaded: state.movies.isMovieListLoaded,
+      moviesLoadedAt: state.movies.moviesLoadedAt,
+    }),
+    shallowEqual
+  );
+
+  const { searchQuery, isLoaded, moviesLoadedAt } = moviesState;
+
+  let movies;
+  if (searchQuery) {
+    movies = moviesState.searchedMovies;
+  } else {
+    movies = moviesState.movies;
+  }
+
   useEffect(() => {
     const oneHour = 60 * 60 * 1000;
     if (!isLoaded || new Date() - new Date(moviesLoadedAt) > oneHour) {
-      getMovies();
+      dispatch(getMovies());
     }
-  }, [isLoaded]);
+
+    if (searchQuery) {
+      dispatch(getSearchMovies(searchQuery));
+    } else {
+      dispatch(getMovies());
+    }
+  }, [isLoaded, searchQuery]);
 
   if (!isLoaded) return <h1>Loading...</h1>;
+
+  if (searchQuery && moviesState.searchedMovies.length === 0) return <h2>No results were found for your search.</h2>
 
   return (
     <MoviesGrid>
@@ -25,21 +54,7 @@ const MoviesList = ({ movies, getMovies, isLoaded, moviesLoadedAt }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  movies: state.searchedMovies.searchedMovies.length > 0 ? state.searchedMovies.searchedMovies : state.movies.movies,
-  isLoaded: state.movies.isMovieListLoaded,
-  moviesLoadedAt: state.movies.moviesLoadedAt,
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      getMovies,
-    },
-    dispatch
-  );
-
-export default connect(mapStateToProps, mapDispatchToProps)(MoviesList);
+export default MoviesList;
 
 const MoviesGrid = styled.div`
   display: flex;
